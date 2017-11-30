@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+    p {
+      line-height: 150%;
+    }
+    p.normal {
+      line-height: 100%;
+    }
+    </style>
+    <title>{{ heading }}</title>
+</head>
+<body>
+    {% for item in output -%}
+        {{ item }}
+    {% endfor -%}
+
+    <a href="{{oncc_article_url}}"><img src="../apple_logo.png"></a> 
+</body>
+</html>
