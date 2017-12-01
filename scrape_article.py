@@ -45,7 +45,7 @@ domain = '' # Already has domain name for Apple Daily
 oncc_article_url = str(domain + sys.argv[1])
 Log('Scraping ' + oncc_article_url)
 #e.g. oncc_article_url = 'https://hk.news.appledaily.com/local/daily/article/20171130/20230563'
-i = oncc_article_url.rfind('/')  # Search last '/' char to get the aricle Id
+i = oncc_article_url.rfind('/')  # Search last '/' char to get the article Id
 articleId = oncc_article_url[i+1:]
 articleTmpFile = tmp_path+'/'+articleId+'.txt'
 
