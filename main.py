@@ -32,8 +32,8 @@ def Log(mesg):
 Log('Apple Daily: main starts...')
 
 # Define project home path
-project_path = '.'  # for Windows or RPi interactive
-#project_path = '/home/pi/Projects/appledaily/'  # for RPi cron job
+#project_path = '.'  # for Windows or RPi interactive
+project_path = '/home/pi/Projects/appledaily'  # for RPi cron job
 
 # Create output folder <yymmdd>
 folder = project_path + '/' + time.strftime('%Y%m%d')
@@ -43,7 +43,7 @@ if not os.path.exists(folder):
 
 
 # Using jinja to create main html page
-topic_id=['1', '2']
+topic_id=['2', '1']
 index_title=['要聞港聞', '財經地產']
 index_href=['main_index.html', 'finance_index.html']
 templateLoader = FileSystemLoader( searchpath=project_path )
@@ -73,8 +73,8 @@ else:
 # Loop to scrape each topic ID
 for id in topic_id:
   print('topic_id='+id)
-  cmd = 'python scrape_index.py ' + id  # for windows
-#  cmd = 'python3 ' + project_path + '/scrape_index.py ' + id  # for RPi
+#  cmd = 'python scrape_index.py ' + id  # for windows
+  cmd = 'python3 ' + project_path + '/scrape_index.py ' + id  # for RPi
   os.system(cmd)
 
 Log('End of main.')

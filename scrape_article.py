@@ -36,8 +36,8 @@ if len(sys.argv)<2:
     quit()  # Exit program
 
 # Define project home path
-project_path = '.'  # for Windows or RPi interactive
-#project_path = '/home/pi/Projects/onccnews'  # for RPi cron job
+#project_path = '.'  # for Windows or RPi interactive
+project_path = '/home/pi/Projects/appledaily'  # for RPi cron job
 tmp_path = project_path+'/tmp'  # for RPi cron job
 
 #domain = 'http://orientaldaily.on.cc'
@@ -128,6 +128,6 @@ with open(filename, "w", encoding="utf-8") as f:
     f.write(output)
     Log(filename + ' saved.')
 f.close()
-Log('Sleep 2 secs...')
-time.sleep(2)
+#Log('Sleep 2 secs...')
+#time.sleep(2)
 Log('End of scrape_article.')

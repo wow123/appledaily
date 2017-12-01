@@ -64,8 +64,8 @@ else:
   print('<Topic ID>: '+topicID)
 	
 # Define project home path
-project_path = '.'  # for Windows or RPi interactive
-#project_path = '/home/pi/Projects/appledaily/'  # for RPi cron job
+#project_path = '.'  # for Windows or RPi interactive
+project_path = '/home/pi/Projects/appledaily'  # for RPi cron job
 tmp_path = project_path+'/tmp'  # for RPi cron job
 
 #domain = 'https://hk.news.appledaily.com'
@@ -159,10 +159,10 @@ else:
 # Loop to scrape each article
 for t, h in zip(article_type, article_oncc_href):
     if t == 'A':
-        print(h)
+#        print(h)
         # Call scrape_article.py
 #        cmd = 'python scrape_article.py ' + h  # for windows
-#        cmd = 'python3 ' + project_path + '/scrape_article.py ' + h  # for RPi
-#        os.system(cmd)
+        cmd = 'python3 ' + project_path + '/scrape_article.py ' + h  # for RPi
+        os.system(cmd)
 
 Log('End of scrape_index.')
