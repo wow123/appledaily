@@ -125,7 +125,7 @@ for optgroup in article_list.findAll('optgroup'):
         # Add article to the list variables
         article_type.append('A')  # article
         article_title.append(option.text)
-        i = option['value'].rfind('/')  # Search last '/' char to get the aricle Id
+        i = option['value'].rfind('/')  # Search last '/' char to get the article Id
         article_href.append(option['value'][i+1:] + ".html")
 
 # Create output folder <yymmdd>
