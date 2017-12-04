@@ -57,7 +57,7 @@ if len(sys.argv)<2:
 
 # Validate the parameter
 topicID = sys.argv[1]
-if (topicID != '1' and topicID != '2'):
+if (topicID != '1' and topicID != '2' and topicID != '3'):
   print('Error: Wrong <Topic ID>!')
   quit()
 else:
@@ -77,6 +77,10 @@ elif topicID == '2':
   oncc_index_url = 'https://hk.finance.appledaily.com/daily/finance/'
   indexTmpFile = tmp_path+'/finance_index.txt'
   html_file = 'finance_index.html'
+elif topicID == '3':
+  oncc_index_url = 'https://hk.lifestyle.appledaily.com/'
+  indexTmpFile = tmp_path+'/lifestyle_index.txt'
+  html_file = 'lifestyle_index.html'
 
 #Commented on 17.11.2017
 #Fail to use lxml in crontab mode to render webpage.

@@ -43,9 +43,9 @@ if not os.path.exists(folder):
 
 
 # Using jinja to create main html page
-topic_id=['2', '1']
-index_title=['要聞港聞', '財經地產']
-index_href=['main_index.html', 'finance_index.html']
+topic_id=['2', '1', '3']
+index_title=['要聞港聞', '財經地產', '副刋果籽']
+index_href=['main_index.html', 'finance_index.html', 'lifestyle_index.html']
 templateLoader = FileSystemLoader( searchpath=project_path )
 env = Environment( loader=templateLoader )
 env.globals.update(zip=zip)  #to use zip which can iterate 2 lists
