@@ -57,7 +57,7 @@ if len(sys.argv)<2:
 
 # Validate the parameter
 topicID = sys.argv[1]
-if (topicID != '1' and topicID != '2' and topicID != '3'):
+if (topicID != '1' and topicID != '2' and topicID != '3' and topicID != '4' and topicID != '5'):
   print('Error: Wrong <Topic ID>!')
   quit()
 else:
@@ -81,15 +81,26 @@ elif topicID == '3':
   oncc_index_url = 'https://hk.lifestyle.appledaily.com/'
   indexTmpFile = tmp_path+'/lifestyle_index.txt'
   html_file = 'lifestyle_index.html'
+elif topicID == '4':
+  oncc_index_url = 'https://hk.entertainment.appledaily.com/daily/entertainment'
+  indexTmpFile = tmp_path+'/entertainment_index.txt'
+  html_file = 'entertainment_index.html'
+elif topicID == '5':
+  oncc_index_url = 'https://hk.news.appledaily.com/daily/international/'
+  indexTmpFile = tmp_path+'/international_index.txt'
+  html_file = 'international_index.html'
 
+  
 #Commented on 17.11.2017
 #Fail to use lxml in crontab mode to render webpage.
 #lxml works fine in interactive mode.
 #Instead, use PhantomJS in crontab mode.
 # Render web page by lxml
 #r = Render(domain)
-Log('Saving web page using phantomjs...')
-cmd = 'phantomjs '+project_path+'/saveWebPage.js '+oncc_index_url+' > '+indexTmpFile
+#Log('Saving web page using phantomjs...')
+#cmd = 'phantomjs '+project_path+'/saveWebPage.js '+oncc_index_url+' > '+indexTmpFile
+Log('Saving web page using curl...')
+cmd = 'curl '+oncc_index_url+' > '+indexTmpFile
 os.system(cmd)
 # Program will wait for phantomjs to finish, so no need to sleep
 #Log('Sleep 10 secs...')
@@ -110,15 +121,16 @@ article_type=[]
 article_title=[]
 article_href=[]
 article_oncc_href=[]
-for optgroup in article_list.findAll('optgroup'):
-#    print('inside optgroup')
-#    print(optgroup)
-    # Add group label to the lists
-    article_type.append('G')  # group label
-    article_title.append(optgroup['label'])
-    article_href.append('')
-    article_oncc_href.append('')
-    for option in optgroup.findAll('option'):
+#for optgroup in article_list.findAll('optgroup'):
+optgroup = article_list.find('optgroup')
+#print('inside optgroup')
+#print(optgroup.encode('utf-8'))
+# Add group label to the lists
+article_type.append('G')  # group label
+article_title.append(optgroup['label'])
+article_href.append('')
+article_oncc_href.append('')
+for option in optgroup.findAll('option'):
         # Add oncc link for each article for later use of scrape_article
         oncc_href = option['value']
         article_oncc_href.append(oncc_href)
@@ -142,8 +154,12 @@ TEMPLATE_FILE = 'tmpl_index.html'
 template = env.get_template( TEMPLATE_FILE )
 newsdate = time.strftime('%d-%m-%Y') + ' ~ ' + WeekdayInChinese(time.strftime('%a'))
 #output = template.render(newsdate=newsdate, types=article_type, titles=article_title, hrefs=article_href, head_img_url=head_img_url)
-output = template.render(newsdate=newsdate, types=article_type, titles=article_title, hrefs=article_href)
-#print(output)
+# Changed on 15.4.2019
+# Since, Apple Daily requires user to login to see the article,
+# when the article link in the index page is clicked, go to the Apple Daily page. 
+#output = template.render(newsdate=newsdate, types=article_type, titles=article_title, hrefs=article_href)
+output = template.render(newsdate=newsdate, types=article_type, titles=article_title, hrefs=article_oncc_href)
+#print(output.encode('utf-8'))
 filename = os.path.join(folder, html_file)
 with open(filename, 'w', encoding='utf-8') as f:
     f.write(output)
@@ -159,14 +175,14 @@ if os.path.exists(yfolder):
 else:
     Log('Folder ' + yfolder + ' not exists.')
 
-# Amend on 6.4.2017
+# Commented on 12.4.2019: Need login Apple Daily to see each article
 # Loop to scrape each article
-for t, h in zip(article_type, article_oncc_href):
-    if t == 'A':
+#for t, h in zip(article_type, article_oncc_href):
+#    if t == 'A':
 #        print(h)
         # Call scrape_article.py
 #        cmd = 'python scrape_article.py ' + h  # for windows
-        cmd = 'python3 ' + project_path + '/scrape_article.py ' + h  # for RPi
-        os.system(cmd)
+#        cmd = 'python3 ' + project_path + '/scrape_article.py ' + h  # for RPi
+#        os.system(cmd)
 
 Log('End of scrape_index.')
